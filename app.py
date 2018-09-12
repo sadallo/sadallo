@@ -6,26 +6,18 @@ app = Flask(__name__)
 
 app.database = "sample.db"
 
-
 @app.route('/')
 def home():
-	g.db = connect_db()
-	cur = g.db.execute('select * from posts')
-	posts = [dict(title=row[0], description=row[1]) for row in cur.fetchall()]
-	g.db.close()
-	return render_template("index.html", posts=posts)
+	return "Hello world"
 
 @app.route('/universidade/<sigla>/')
 def universidade_busca(sigla):
-	return 'vou pesquisar %s' % sigla
+	g.db = connect_db()
+	cur = g.db.execute("select * from universidades where sigla='%s'" % sigla.upper())
+	universidades = [dict(sigla=row[2], nome=row[1]) for row in cur.fetchall()]
+	g.db.close()
+	return render_template("index.html", universidades=universidades)
 
-@app.route('/universidade/')
-def universidade():
-	return 'Insira uma sigla de alguma universidade federal na url. <br>Exemplo: sadallo.herokuapp.com/universidade/ufmg'
-
-'''@app.route('/welcome/')
-def welcome():
-	return render_template("welcome.html")'''
 def connect_db():
 	return sqlite3.connect(app.database)
 

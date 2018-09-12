@@ -2,12 +2,10 @@
 
 {% block content %}
 
-<h1></h1>
 <br>
-<h3></h3>
-{% for post in posts %}
-	<strong>Title: </strong> {{ post.title }} <br>
-	<strong>Post: </strong> {{ post.description }} <br>
+{% for u in universidades %}
+	<strong>Sigla: </strong> {{ u.sigla }} <br>
+	<strong>Nome: </strong> {{ u.nome }} <br>
 <br>
 {% endfor %}
 
